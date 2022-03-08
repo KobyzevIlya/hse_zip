@@ -20,11 +20,11 @@ void get_chars_frequency(char filename[], int* freq_arr, long* length) {
     fclose(input);
 }
 
-void add_to_list (NODE** pphead, unsigned int freq, int symb, NODE* branch) {
-    while (*pphead) {
-        if ((*pphead)->freq > freq)
+void add_to_list (NODE** init, unsigned int freq, int symb, NODE* branch) {
+    while (*init) {
+        if ((*init)->freq > freq)
             break;
-        pphead = &((*pphead)->next);
+        init = &((*init)->next);
     }
     NODE* pnew = (NODE*)malloc(sizeof(NODE));
 
@@ -36,8 +36,8 @@ void add_to_list (NODE** pphead, unsigned int freq, int symb, NODE* branch) {
         pnew = branch;
     else
         pnew->isSymb = 1;
-    pnew->next = *pphead;
-    *pphead = pnew;
+    pnew->next = *init;
+    *init = pnew;
 }
 
 void make_list(NODE** init, int* freq_arr) {
@@ -81,5 +81,16 @@ void create_codes(NODE** init, int level) {
         create_codes(&((*init)->left), level + 1);
         code[level] = '1';
         create_codes(&((*init)->right), level + 1);
+    }
+}
+
+void find_and_print_code(NODE** init, FILE* file, int symb) {
+    if (*init) {
+        if ((*init)->isSymb && (int)(*init)->symb == symb) {
+            fprintf(file, "%s", (*init)->code);
+            return;
+        }
+        find_and_print_code(&((*init)->left), file, symb);
+        find_and_print_code(&((*init)->right), file, symb);
     }
 }
