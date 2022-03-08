@@ -69,3 +69,17 @@ void make_tree(NODE** init) {
             (*init) = new;
     }
 }
+
+char code[CODE_SIZE];
+void create_codes(NODE** init, int level) {
+    if (*init) {
+        if ((*init)->isSymb != 0) {
+            code[level] = '\0';
+            strcpy((*init)->code, code);
+        }
+        code[level] = '0';
+        create_codes(&((*init)->left), level + 1);
+        code[level] = '1';
+        create_codes(&((*init)->right), level + 1);
+    }
+}

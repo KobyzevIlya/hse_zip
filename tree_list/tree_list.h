@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define CODE_SIZE 100
 #define SYMBOLS_COUNT 256
@@ -21,5 +22,6 @@ void get_chars_frequency(char filename[], int* freq_arr, long* length);
 void add_to_list (NODE** pphead, unsigned int freq, int symb, NODE* branch);
 void make_list(NODE** init, int* freq_arr);
 void make_tree(NODE** init);
+void create_codes(NODE** init, int level);
 
 #endif //TREE_LIST_TREE_LIST_H

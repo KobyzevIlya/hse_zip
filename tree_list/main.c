@@ -17,6 +17,16 @@ void PrintTreeOnSide(const NODE* root, int level) {
     }
 }
 
+//debug
+void Simmetric(const NODE* root) {
+    if (root) {
+        Simmetric(root->left);
+        if (root->isSymb)
+            printf("%c: %s\n", root->symb, root->code);
+        Simmetric(root->right);
+    }
+}
+
 int main() {
     int* freq = init_array_with_zeroes(SYMBOLS_COUNT);
     char filename[] = "../input.txt";
@@ -32,6 +42,12 @@ int main() {
 
     //debug
     PrintTreeOnSide(init, 0);
+
+    create_codes(&init, 0);
+    //debug
+    printf("\n");
+    Simmetric(init);
+
 
     return 0;
 }
