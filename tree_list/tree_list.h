@@ -24,5 +24,6 @@ void make_list(NODE** init, int* freq_arr);
 void make_tree(NODE** init);
 void create_codes(NODE** init, int level);
 void find_and_print_code(NODE** init, FILE* file, int symb);
+void change_symbols_to_bits(char input_filename[], char output_filename[], int length, NODE** init);
 
 #endif //TREE_LIST_TREE_LIST_H

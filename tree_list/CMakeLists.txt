@@ -8,4 +8,6 @@ include_directories(.)
 add_executable(tree_list
         main.c
         tree_list.c
-        tree_list.h)
+        tree_list.h
+        union.c
+        union.h)

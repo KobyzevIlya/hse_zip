@@ -10,7 +10,7 @@ int* init_array_with_zeroes(int count) {
 
 void get_chars_frequency(char filename[], int* freq_arr, long* length) {
     FILE* input = fopen(filename, "rb");
-    if (!input) exit(0);
+    if (!input) exit(1);
     fseek(input, 0, SEEK_END);
     *length = ftell(input);
     fseek(input, 0, SEEK_SET);
@@ -93,4 +93,15 @@ void find_and_print_code(NODE** init, FILE* file, int symb) {
         find_and_print_code(&((*init)->left), file, symb);
         find_and_print_code(&((*init)->right), file, symb);
     }
+}
+
+void change_symbols_to_bits(char input_filename[], char output_filename[], int length, NODE** init) {
+    FILE* input = fopen(input_filename, "r");
+    FILE* output = fopen(output_filename, "w");
+    for (int i = 0; i < length; i++) {
+        int symb = getc(input);
+        find_and_print_code(init, output, symb);
+    }
+    fclose(input);
+    fclose(output);
 }
