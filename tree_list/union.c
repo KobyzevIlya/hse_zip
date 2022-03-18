@@ -36,6 +36,7 @@ void archive(char output_filename[], int length, NODE** init) {
         symb.mbit.b8 = str[i*BIT8 + 7];
         res[i] = symb.symb;
     }
+    res[len] = '\000';
 
     //надо дописать хвост
 
