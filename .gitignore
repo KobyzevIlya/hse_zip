@@ -77,3 +77,4 @@ dkms.conf
 *.iml
 out
 gen
+.vscode

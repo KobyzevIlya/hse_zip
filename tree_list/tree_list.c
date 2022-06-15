@@ -8,7 +8,7 @@ void add_to_list (NODE** init, unsigned long long freq, unsigned char symbol, NO
 void make_list(NODE** init, long long* freq_arr);
 void make_tree(NODE** init);
 void print_tree_on_side(const NODE* init, long long level);
-void create_codes(NODE** init, long long level);
+void create_codes(NODE** init, long long level, char* temp_code);
 void symmetric(NODE* init, FILE* file, TRIPLE* arr);
 void find_and_copy_code(NODE** init, char** code_array, long long symbol);
 void change_symbols_to_codes(char input_filename[], char output_filename[], long length, NODE** init);
@@ -20,8 +20,6 @@ char findAnswer(CODES_AS_TREE* root, const int* arrayLen, long long* offset, int
 void fillArrMinusOne(int* arr);
 CODES_AS_TREE* Add2Tree(CODES_AS_TREE* root, int arrayLen, int deepIndex, int* arr, char value);
 
-char code[CODE_SIZE]; //temporal array for codes
-
 void init_tree(NODE* init, char* fileNameInput, char* fileNameOutput) {
   clock_t startTime, endTime;
   startTime = clock();
@@ -31,7 +29,8 @@ void init_tree(NODE* init, char* fileNameInput, char* fileNameOutput) {
   make_list(&init, freq);
   free(freq);
   make_tree(&init);
-  create_codes(&init, 0);
+  char* temp_code = (char*)malloc(CODE_SIZE*sizeof(char));
+  create_codes(&init, 0, temp_code);
   change_symbols_to_codes(fileNameInput, filename_buffer, length, &init); //write 10101.. to buffer.txt
   archive(fileNameInput, fileNameOutput, length, &init); //take codes from buffer.txt and unite them
   endTime = clock();
@@ -68,7 +67,7 @@ void symmetric(NODE* init, FILE* file, TRIPLE* arr) {
   }
 }
 
-void create_codes(NODE** init, long long level) {
+void create_codes(NODE** init, long long level, char* temp_code) {
   if (*init) {
     if ((*init)->is_symbol != 0) {
       if (!level && !((*init)->next)) {
@@ -76,13 +75,13 @@ void create_codes(NODE** init, long long level) {
         (*init)->code[1] = '\0';
         return;
       }
-      code[level] = '\0';
-      strcpy((*init)->code, code);
+      temp_code[level] = '\0';
+      strcpy((*init)->code, temp_code);
     }
-    code[level] = '0';
-    create_codes(&((*init)->left), level + 1);
-    code[level] = '1';
-    create_codes(&((*init)->right), level + 1);
+    temp_code[level] = '0';
+    create_codes(&((*init)->left), level + 1, temp_code);
+    temp_code[level] = '1';
+    create_codes(&((*init)->right), level + 1, temp_code);
   }
 }
 
